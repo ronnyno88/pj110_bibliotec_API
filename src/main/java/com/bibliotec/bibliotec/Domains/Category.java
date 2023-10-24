@@ -1,5 +1,6 @@
 package com.bibliotec.bibliotec.Domains;
 
+import com.bibliotec.bibliotec.DAO.CategoryDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +24,5 @@ public class Category implements Serializable {
 
     @OneToMany(mappedBy = "category")
     List<Book> books;
+
 }
