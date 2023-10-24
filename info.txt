@@ -1,1 +1,15 @@
+## @SpringBootAplication - indica que a classe anotada é a principal da API
+## @Service - marca a classe com serviço
+## @RestController - marca a classe como controller no padrão MVC
+## @PathVariable - injeta uma variavel fornecida no path da requisição nos parametro do controller
+## @RequestBody - injeta o body de uma requisição para ser tratada
+## @RequestMapping - especifica a URL que será manipulada indicando
+## @Autowired - injeta dependencias obtendo uma instância
+## @Component - marca a classe como componente a ser gerenciado
+## @RestControllerAdvice - defini um componente global para tratar exceções lançadas no controller
+# as classe Service contém a lógica do negócio
 # as classes Controller gerenciam as requisições dos endpoints da API
+
+
+
+# cria as migrações no caminho "resourses/db/migration/"
