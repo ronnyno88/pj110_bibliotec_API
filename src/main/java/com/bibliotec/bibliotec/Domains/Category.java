@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,13 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Category {
+@Entity(name = "categories")
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String description;
 
-    @ManyToOne
-    List<Book> books = new ArrayList<>();
+    @OneToMany(mappedBy = "category")
+    List<Book> books;
 }
