@@ -8,20 +8,26 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "books")
+@Entity
+@Table(name = "books")
 public class Book implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String title;
-    Date published;
+    private static final long serialVersionUID = 1L;
 
-    @OneToOne
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private String title;
+    private String author;
+    private Date published;
+
+    /*@OneToOne
     @JoinColumn(name = "category_id")
     Category category;
+    */
 }

@@ -32,11 +32,7 @@ public class CategoryService {
 
     public Category update(Integer id, CategoryDTO objDTO){
         Category obj = findById(id);
-        if(obj != null){
-            obj.setId(objDTO.getId());
-            obj.setDescription(objDTO.getDescription());
-            return repository.save(obj);
-        }
+
         return null;
     }
 

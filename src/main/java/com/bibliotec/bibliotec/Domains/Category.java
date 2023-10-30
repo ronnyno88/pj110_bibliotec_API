@@ -10,19 +10,23 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "categories")
+@Entity
+@Table(name = "categories")
 public class Category implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String description;
+    private static final long serialVersionUID = 1L;
 
-    @OneToMany(mappedBy = "category")
-    List<Book> books;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private String description;
+
+    //@OneToMany(mappedBy = "category")
+    //List<Book> books;
 
 }

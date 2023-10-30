@@ -1,18 +1,9 @@
 package com.bibliotec.bibliotec.DAO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-import java.io.Serializable;
 import java.util.Date;
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class BookDTO implements Serializable {
-    private Integer id;
-    private String title;
-    private Date published;
+
+public record BookDTO(@NotBlank String title, @NotBlank String author, @NotNull Date published) {
 }
