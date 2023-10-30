@@ -1,43 +1,50 @@
 package com.bibliotec.bibliotec.Services;
 
 import com.bibliotec.bibliotec.DAO.CategoryDTO;
+import com.bibliotec.bibliotec.Domains.Book;
 import com.bibliotec.bibliotec.Domains.Category;
 import com.bibliotec.bibliotec.Repositories.CategoryRepository;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CategoryService {
     
     @Autowired
-    private CategoryRepository repository;
+    private CategoryRepository categoryRepository;
 
-    public Category findById(Integer id){
-        Optional<Category> obj = repository.findById(id);
+    public List<Category> getAllCategories(){
+        return categoryRepository.findAll();
+    }
+
+    public Optional<Category> getOneCategory(UUID id) {
+        return categoryRepository.findById(id);
+    }
+
+    public Category saveCategory(CategoryDTO categoryDto){
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryDto, category);
+        return categoryRepository.save(category);
+    }
+
+    public Category updateCategory(UUID id, CategoryDTO categoryDTO){
+        Optional<Category> categoryO = categoryRepository.findById(id);
+        if (categoryO.isPresent()) {
+            var category = categoryO.get();
+            BeanUtils.copyProperties(categoryDTO, category);
+            return categoryRepository.save(category);
+        }
         return null;
     }
 
-    public List<Category> findAll(){
-        return repository.findAll();
-    }
-
-    public Category create(Category obj){
-        obj.setId(null);
-        return repository.save(obj);
-    }
-
-    public Category update(Integer id, CategoryDTO objDTO){
-        Category obj = findById(id);
-
-        return null;
-    }
-
-    public void deleteById(Integer id){
-        findById(id);
-        repository.deleteById(id);
+    public void deleteCategory(UUID id){
+        Optional<Category> categoryO = categoryRepository.findById(id);
+        categoryO.ifPresent(categoryRepository::delete);
     }
 }

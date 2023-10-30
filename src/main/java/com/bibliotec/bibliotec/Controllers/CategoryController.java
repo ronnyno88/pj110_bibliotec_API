@@ -2,57 +2,56 @@ package com.bibliotec.bibliotec.Controllers;
 
 import com.bibliotec.bibliotec.DAO.CategoryDTO;
 import com.bibliotec.bibliotec.Domains.Category;
-import com.bibliotec.bibliotec.Repositories.CategoryRepository;
 import com.bibliotec.bibliotec.Services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getAllCategories(){
-        List<Category> categories = service.findAll();
-        List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::new).toList();
-        return ResponseEntity.ok(categoryDTOS);
+    @GetMapping(value = "/categories")
+    public ResponseEntity<List<Category>> getAllCategories(){
+        List<Category> categoryList = categoryService.getAllCategories();
+        //hateoas
+        return ResponseEntity.status(HttpStatus.OK).body(categoryList);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> getCategoriesById(@PathVariable Integer id){
-        Category obj = service.findById(id);
-        return ResponseEntity.ok(obj);
+    @GetMapping(value = "/categories/{id}")
+    public ResponseEntity<Object> getCategoriesById(@PathVariable(value = "id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getOneCategory(id));
     }
 
 
-    @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category obj){
-        obj = service.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    @PostMapping(value = "/categories")
+    public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO){
+        //hateoas
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.saveCategory(categoryDTO));
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Integer id, @RequestBody CategoryDTO objDTO){
-        Category newObj = service.update(id, objDTO);
-        return ResponseEntity.ok(new CategoryDTO(newObj));
+    @PutMapping(value = "/categories/{id}")
+    public ResponseEntity<Object> updateCategory(@PathVariable(value = "id") UUID id, @RequestBody @Valid CategoryDTO categoryDTO){
+        Category category = categoryService.updateCategory(id, categoryDTO);
+        if (category != null){
+            //hateoas
+            return ResponseEntity.status(HttpStatus.OK).body(category);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
+        }
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Integer id){
-        service.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping(value = "/categories/{id}")
+    public ResponseEntity<Object> deleteCategory(@PathVariable(value = "id") UUID id){
+        categoryService.deleteCategory(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Delected sucessfully");
     }
 
 

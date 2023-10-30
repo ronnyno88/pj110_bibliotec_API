@@ -30,11 +30,6 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public void deleteBook(UUID id) {
-        Optional<Book> bookO = bookRepository.findById(id);
-        bookO.ifPresent(bookRepository::delete);
-    }
-
     public Book updateBook(UUID id, BookDTO bookRecordDto) {
         Optional<Book> bookO = bookRepository.findById(id);
         if (bookO.isPresent()) {
@@ -43,5 +38,10 @@ public class BookService {
             return bookRepository.save(book);
         }
         return null;
+    }
+
+    public void deleteBook(UUID id) {
+        Optional<Book> bookO = bookRepository.findById(id);
+        bookO.ifPresent(bookRepository::delete);
     }
 }
