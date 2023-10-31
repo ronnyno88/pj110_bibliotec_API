@@ -1,10 +1,9 @@
 package com.bibliotec.bibliotec.Services;
 
-import com.bibliotec.bibliotec.DAO.CategoryDTO;
-import com.bibliotec.bibliotec.Domains.Book;
+import com.bibliotec.bibliotec.DTO.CategoryDTO;
 import com.bibliotec.bibliotec.Domains.Category;
 import com.bibliotec.bibliotec.Repositories.CategoryRepository;
-import org.hibernate.ObjectNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +40,14 @@ public class CategoryService {
             return categoryRepository.save(category);
         }
         return null;
+    }
+
+    public Category updateCategoryByCategory(Category category) {
+        UUID categoryId = category.getId();
+        if (categoryId == null) {
+            throw new EntityNotFoundException("A categoria não existe no banco de dados");
+        }
+        return categoryRepository.save(category);
     }
 
     public void deleteCategory(UUID id){

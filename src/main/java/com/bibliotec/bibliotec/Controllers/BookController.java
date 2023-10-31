@@ -1,6 +1,6 @@
 package com.bibliotec.bibliotec.Controllers;
 
-import com.bibliotec.bibliotec.DAO.BookDTO;
+import com.bibliotec.bibliotec.DTO.BookDTO;
 import com.bibliotec.bibliotec.Domains.Book;
 import com.bibliotec.bibliotec.Services.BookService;
 import jakarta.validation.Valid;

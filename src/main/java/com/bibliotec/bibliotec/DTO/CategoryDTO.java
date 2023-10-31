@@ -1,4 +1,4 @@
-package com.bibliotec.bibliotec.DAO;
+package com.bibliotec.bibliotec.DTO;
 
 import jakarta.validation.constraints.NotBlank;
 

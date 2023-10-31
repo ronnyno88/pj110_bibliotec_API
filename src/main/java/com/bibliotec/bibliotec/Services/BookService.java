@@ -1,8 +1,10 @@
 package com.bibliotec.bibliotec.Services;
 
-import com.bibliotec.bibliotec.DAO.BookDTO;
+import com.bibliotec.bibliotec.DTO.BookDTO;
 import com.bibliotec.bibliotec.Domains.Book;
+import com.bibliotec.bibliotec.Domains.Category;
 import com.bibliotec.bibliotec.Repositories.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
@@ -27,6 +31,8 @@ public class BookService {
     public Book saveBook(BookDTO bookDto) {
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
+        Category category = categoryService.getOneCategory(bookDto.category_id()).orElseThrow(() -> new EntityNotFoundException("Não Encontrada"));
+        book.setCategory(category);
         return bookRepository.save(book);
     }
 

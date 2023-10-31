@@ -1,6 +1,6 @@
 package com.bibliotec.bibliotec.Controllers;
 
-import com.bibliotec.bibliotec.DAO.CategoryDTO;
+import com.bibliotec.bibliotec.DTO.CategoryDTO;
 import com.bibliotec.bibliotec.Domains.Category;
 import com.bibliotec.bibliotec.Services.CategoryService;
 import jakarta.validation.Valid;

@@ -26,8 +26,8 @@ public class Book implements Serializable {
     private String author;
     private Date published;
 
-    /*@OneToOne
+    @OneToOne
     @JoinColumn(name = "category_id")
-    Category category;
-    */
+    private Category category;
+
 }
