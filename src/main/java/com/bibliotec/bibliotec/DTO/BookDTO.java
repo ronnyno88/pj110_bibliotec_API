@@ -8,10 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
-public record BookDTO(@NotBlank String title, @NotBlank String author, @NotNull Date published, UUID category_id) {
+public record BookDTO(@NotBlank String title, @NotBlank String author, @NotNull Date published, List<UUID> category_ids) {
     @Override
-    public UUID category_id() {
-        return category_id;
+    public List<UUID> category_ids() {
+        return category_ids;
     }
 }

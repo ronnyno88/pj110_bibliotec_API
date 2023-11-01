@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,8 +32,14 @@ public class BookService {
     public Book saveBook(BookDTO bookDto) {
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
-        Category category = categoryService.getOneCategory(bookDto.category_id()).orElseThrow(() -> new EntityNotFoundException("Não Encontrada"));
-        book.setCategory(category);
+
+        List<Category> categories = new ArrayList<>();
+        for (UUID categoryId : bookDto.category_ids()) {
+            Category category = categoryService.getOneCategory(categoryId).orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada"));
+            categories.add(category);
+        }
+
+        book.setCategories(categories);
         return bookRepository.save(book);
     }
 

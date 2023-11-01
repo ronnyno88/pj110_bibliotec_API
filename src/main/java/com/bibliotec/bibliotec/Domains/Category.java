@@ -23,7 +23,8 @@ public class Category implements Serializable {
     private UUID id;
     private String description;
 
-    @OneToOne(mappedBy = "category")
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Book book;
 
 }

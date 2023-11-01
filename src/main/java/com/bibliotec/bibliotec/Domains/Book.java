@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -26,8 +27,8 @@ public class Book implements Serializable {
     private String author;
     private Date published;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "category_id")
-    private Category category;
+    private List<Category> categories;
 
 }
