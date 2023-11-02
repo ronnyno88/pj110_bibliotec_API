@@ -8,10 +8,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
 
 @Service
 public class BookService {
@@ -39,7 +37,7 @@ public class BookService {
             categories.add(category);
         }
 
-        book.setCategories(categories);
+        book.setCategories(new HashSet<>(categories));
         return bookRepository.save(book);
     }
 

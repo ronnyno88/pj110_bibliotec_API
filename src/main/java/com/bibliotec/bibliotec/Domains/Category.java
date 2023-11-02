@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -22,9 +23,5 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Book book;
 
 }

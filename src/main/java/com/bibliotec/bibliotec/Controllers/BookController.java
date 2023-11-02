@@ -20,7 +20,6 @@ public class BookController {
     @GetMapping(value = "/books")
     public ResponseEntity<List<Book>> getAllBooks(){
         List<Book> bookList = bookService.getAllBooks();
-        //hateoas
         return ResponseEntity.status(HttpStatus.OK).body(bookList);
     }
     @GetMapping(value = "/books/{id}")
